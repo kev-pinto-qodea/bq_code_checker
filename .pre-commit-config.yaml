@@ -22,7 +22,7 @@ repos:
   - repo: local
     hooks:
       - id: bq-code-review
-        name: ai_code_reviewer.py
+        name: AI SQL Code Review
         entry: python3 ai_code_reviewer.py
         additional_dependencies:
           - google-genai
@@ -32,3 +32,4 @@ repos:
         types: [sql]
         exclude_types:
           - markdown
+        timeout: 300
