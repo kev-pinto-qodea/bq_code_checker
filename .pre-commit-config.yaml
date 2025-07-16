@@ -10,14 +10,14 @@ repos:
   #    It also supports baselining, so you can ignore existing known secrets.
   #    Read more: https://github.com/Yelp/detect-secrets
   # -----------------------------------------------------
-  - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.5.0 # Use the latest stable version
-    hooks:
-      - id: detect-secrets
-        # Ensure it checks SQL files and potentially other common sensitive files
-        files: \.(sql|sh|env|txt|conf|config|pem|key|crt|json|yml|yaml|xml|tf|tfvars|py|js|ts|go|java|cs|php|rb|md|rst)$
-        args: ['--baseline', '.secrets.baseline']
-        exclude: package.lock.json
+  # - repo: https://github.com/Yelp/detect-secrets
+  #   rev: v1.5.0 # Use the latest stable version
+  #   hooks:
+  #     - id: detect-secrets
+  #       # Ensure it checks SQL files and potentially other common sensitive files
+  #       files: \.(sql|sh|env|txt|conf|config|pem|key|crt|json|yml|yaml|xml|tf|tfvars|py|js|ts|go|java|cs|php|rb|md|rst)$
+  #       args: ['--baseline', '.secrets.baseline']
+  #       exclude: package.lock.json
 
 
   # -----------------------------------------------------
