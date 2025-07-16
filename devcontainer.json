@@ -1,0 +1,68 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+	"name": "BQ Code Review",
+	"image": "mcr.microsoft.com/devcontainers/base:jammy",
+	"features": {
+		"ghcr.io/devcontainers/features/github-cli:1": {
+			"installDirectlyFromGitHubRelease": true,
+			"version": "latest"
+		},
+
+		"ghcr.io/dhoeric/features/google-cloud-cli:1": {
+			"installGkeGcloudAuthPlugin": true
+		},
+		"ghcr.io/prulloac/devcontainer-features/pre-commit:1": {},
+		"ghcr.io/dhoeric/features/trivy:1": {}
+	},
+	"mounts": [
+		// Create anonymous volume mounts for the python venv.
+		// This is recommended by uv because it might create symlinks to the
+		{
+			"type": "volume",
+			"target": "${containerWorkspaceFolder}/.venv"
+		},
+        {
+            // The source is your local .ssh folder. ${localEnv:HOME} dynamically resolves to your user's home directory on the host.
+            "source": "${localEnv:HOME}/.ssh",
+            // The target is the .ssh folder within the 'vscode' user's home directory inside the container.
+            "target": "/home/vscode/.ssh",
+            "type": "bind",
+            // "consistency": "delegated" is often recommended for performance on macOS/Windows
+            "consistency": "delegated"
+        },
+		{
+		// Mount the gcloud config directory from your host
+    	// Adjust path for Windows: "source=${localEnv:APPDATA}/gcloud", "target=/root/.config/gcloud"
+    	// On Linux/macOS:
+    	"source": "${localEnv:HOME}/.config/gcloud",
+    	"target": "/home/vscode/.config/gcloud", // Or /home/vscode/.config/gcloud if you're not root
+    	"type": "bind"
+		}
+	],
+	// Need to change the containerUser (this is normally root) so that any
+	// volumes that are created are owned by the correct user.
+	"containerUser": "vscode",
+	"postCreateCommand": {
+		"pre-commit": "pre-commit install",
+		"python-pip": "pip install --upgrade google-genai",
+		"detect-secrets": "pip install detect-secrets"
+	},
+	 "remoteEnv": {
+    "GIT_USER_NAME": "${localEnv:GIT_USER_NAME}",
+    "GIT_USER_EMAIL": "${localEnv:GIT_USER_EMAIL}"
+  }
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"charliermarsh.ruff",
+				"hashicorp.terraform",
+				"redhat.vscode-yaml",
+				"johnpapa.vscode-peacock",
+				"hashicorp.terraform",
+				"davidanson.vscode-markdownlint",
+				"foxundermoon.shell-format"
+			]
+		}
+	}
+}
