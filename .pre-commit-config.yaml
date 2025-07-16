@@ -5,22 +5,6 @@
 
 repos:
   # -----------------------------------------------------
-  # 1. Detect Secrets (Recommended for generic secret detection)
-  #    This is a robust tool that can fingerprint many types of secrets.
-  #    It also supports baselining, so you can ignore existing known secrets.
-  #    Read more: https://github.com/Yelp/detect-secrets
-  # -----------------------------------------------------
-  # - repo: https://github.com/Yelp/detect-secrets
-  #   rev: v1.5.0 # Use the latest stable version
-  #   hooks:
-  #     - id: detect-secrets
-  #       # Ensure it checks SQL files and potentially other common sensitive files
-  #       files: \.(sql|sh|env|txt|conf|config|pem|key|crt|json|yml|yaml|xml|tf|tfvars|py|js|ts|go|java|cs|php|rb|md|rst)$
-  #       args: ['--baseline', '.secrets.baseline']
-  #       exclude: package.lock.json
-
-
-  # -----------------------------------------------------
   # Optional: General code quality/linting hooks (useful for any project)
   # Examples: checking for large files, trailing whitespace, end-of-file-fixer
   # -----------------------------------------------------
@@ -45,3 +29,6 @@ repos:
         language: python
         pass_filenames: false
         args: ['--project', 'cts-sbx-1f2-upbeat-hermann', '--location', 'europe-west4','--sql_dir','./sql']
+        types: [sql]
+        exclude_types:
+          - markdown

@@ -1,5 +1,5 @@
 -------------------------------------------------------------
--- Script name : kevs_sample_fact.sql
+-- Script name : simple_fact.sql
 -- Author      : John Doe
 -- Date        : 07-07-2025
 -- Reason      : Initial - migration to bqsql

@@ -20,10 +20,10 @@ The script is designed to be flexible, allowing users to specify the GCP project
 location, and the directory containing the SQL files via command-line arguments.
 
 Usage:
-    python sql_reviewer.py --sql_dir <path_to_sql_files> --project <gcp_project_id> --location <gcp_location>
+    python ai_code_reviewer.py --sql_dir <path_to_sql_files> --project <gcp_project_id> --location <gcp_location>
 
 Example:
-    python sql_reviewer.py --sql_dir ./sql_scripts --project my-gcp-project --location us-central1
+    python ai_code_reviewer.py --sql_dir ./sql_scripts --project my-gcp-project --location us-central1
 """
 
 
@@ -163,19 +163,7 @@ def generate():
         )
         sys.exit(1)
 
-    # Define prompt text and read system context once outside the loop
-    # prompt_text = (
-    #     "Give me a QA Report on the Code, Your response should directly address "
-    #     "whether code is in line with Standards defined as part of system context "
-    #     "and the format is in line with the Standard Template, generate a concise report."
-    #     "Add the time taken to revew, date time and the LLM Model name at the end of the Report\n"
-    # )
     si_text1 = read_system_context()  # System instruction text
-    prompt_text = read_prompt()  # Read the prompt from the file
-    if not prompt_text:
-        print("Error: The prompt text is empty. Please check 'system_prompt.md'.")
-        sys.exit(1)
-
     if not si_text1:
         print("Error: The system context is empty. Please check 'system_context.md'.")
         sys.exit(1)
@@ -214,6 +202,14 @@ def generate():
             sql_file_path = os.path.join(args.sql_dir, filename)
 
             print(f"\n--- Processing SQL file: {filename} ---")
+            stg_prompt_text = read_prompt()  # Read the prompt from the file
+            if not stg_prompt_text:
+                print("Error: The prompt text is empty. Please check 'system_prompt.md'.")
+                sys.exit(1)
+
+            prompt_text= stg_prompt_text.format(
+                filename=filename
+            )  # Format the prompt with the current filename
 
             try:
                 # Read the content of the current SQL file

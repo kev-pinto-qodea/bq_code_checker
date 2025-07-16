@@ -8,6 +8,8 @@ Your report should cover the following areas of Compliance:
 1. **Documentation & Structure:**
 
 * Script contains a header block with script name, author, date, and purpose.
+* Name of the Script and name of the file match
+* Date mentioned is valid
 * Major sections are clearly separated with visual dividers or comments.
 * All code blocks and complex logic are well-commented.
 * All business logic and transformation rules are clearly documented, especially for non-obvious calculations or mappings.
