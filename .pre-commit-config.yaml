@@ -1,0 +1,47 @@
+# .pre-commit-config.yaml
+#
+# For more info: https://pre-commit.com
+# To run all hooks on all files: pre-commit run --all-files
+
+repos:
+  # -----------------------------------------------------
+  # 1. Detect Secrets (Recommended for generic secret detection)
+  #    This is a robust tool that can fingerprint many types of secrets.
+  #    It also supports baselining, so you can ignore existing known secrets.
+  #    Read more: https://github.com/Yelp/detect-secrets
+  # -----------------------------------------------------
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0 # Use the latest stable version
+    hooks:
+      - id: detect-secrets
+        # Ensure it checks SQL files and potentially other common sensitive files
+        files: \.(sql|sh|env|txt|conf|config|pem|key|crt|json|yml|yaml|xml|tf|tfvars|py|js|ts|go|java|cs|php|rb|md|rst)$
+        args: ['--baseline', '.secrets.baseline']
+        exclude: package.lock.json
+
+
+  # -----------------------------------------------------
+  # Optional: General code quality/linting hooks (useful for any project)
+  # Examples: checking for large files, trailing whitespace, end-of-file-fixer
+  # -----------------------------------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0 # Use the latest stable version
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+      - id: check-added-large-files
+        args: ['--maxkb=2048'] # Warn if adding files larger than 2MB
+      # - id: forbid-binary # Uncomment to prevent committing any binary files
+
+  - repo: local
+    hooks:
+      - id: bq-code-review
+        name: ai_code_reviewer.py
+        entry: python3 ai_code_reviewer.py
+        additional_dependencies:
+          - google-genai
+        language: python
+        pass_filenames: false
+        args: ['--project', 'cts-sbx-1f2-upbeat-hermann', '--location', 'europe-west4','--sql_dir','./sql']
