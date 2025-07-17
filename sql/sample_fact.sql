@@ -8,7 +8,7 @@
 
 BEGIN
 
---set job variables and update schedule table(s)
+--set job variables and update schedule table(s) 
 --#DECLARE v_job_name      STRING    DEFAULT "fact_withdrawal_feed_service_rule_result";
 --#DECLARE v_job_startdttm TIMESTAMP DEFAULT '{startdttm}';  --injected from DAG (utc)
 --#DECLARE v_job_enddttm   TIMESTAP  DEFAULT '{enddttm}';    --injected from DAG (utc)
