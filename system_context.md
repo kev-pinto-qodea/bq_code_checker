@@ -20,6 +20,7 @@ Your report should cover the following areas of Compliance:
 * Default values are sourced from the central control function orgx_cntl.default_vars().
 * Variable names are descriptive and consistently prefixed (e.g., v_).
 * All parameters and variables are initialized with safe defaults to prevent runtime errors.
+* Variables are snake case (eg., v_first_name)
 
 3. **Transaction Management:**
 
