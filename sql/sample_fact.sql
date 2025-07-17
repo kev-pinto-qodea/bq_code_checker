@@ -24,7 +24,7 @@ DECLARE v_defnulldttm   DEFAULT orgx_cntl.default_vars().defnulldttm;
 
 DECLARE v_mindate TIMESTAMP;
 DECLARE v_mindate_int INT64;
-DECLARE v_merge_datefilter INT64;
+DECLARE v_MergeDateFilter INT64;
 DECLARE v_dim_source_record_set_key INT64 DEFAULT v_defnullnum;
 DECLARE v_max_sk INT64;
 
