@@ -233,7 +233,7 @@ def generate():
                 0
             ]  # Get filename without extension
             output_qa_filename = (
-                f"{base_filename}.md"  # Create .md filename for the QA report
+                os.path.join(args.sql_dir,f"{base_filename}.md")  # Create .md filename for the QA report
             )
 
             print(

@@ -32,4 +32,3 @@ repos:
         types: [sql]
         exclude_types:
           - markdown
-        timeout: 300

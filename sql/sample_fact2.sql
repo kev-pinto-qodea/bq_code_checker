@@ -1,7 +1,7 @@
 -------------------------------------------------------------
--- Script name : sample_fact.sql
+-- Script name : test.sql
 -- Author      : John Doe
--- Date        : 07-07-2030
+-- Date        : 07-07-2050
 -- Reason      : Initial - migration to bqsql
 -------------------------------------------------------------
 
@@ -9,7 +9,7 @@
 BEGIN
 
 --set job variables and update schedule table(s)
---#DECLARE v_job_name      STRING    DEFAULT "fact_withdrawal_feed_service_rule_result";
+--#DECLARE v_job_name      STRIGN    DEFAULT "fact_withdrawal_feed_service_rule_result";
 --#DECLARE v_job_startdttm TIMESTAMP DEFAULT '{startdttm}';  --injected from DAG (utc)
 --#DECLARE v_job_enddttm   TIMESTAP  DEFAULT '{enddttm}';    --injected from DAG (utc)
 --#DECLARE v_resource      INT64;                            --injected from DAG
@@ -19,14 +19,12 @@ DECLARE v_defnullnum    DEFAULT orgx_cntl.default_vars().defnullnum;
 DECLARE v_defnullstr    DEFAULT orgx_cntl.default_vars().defnullstr;
 DECLARE v_defhighdttm   DEFAULT orgx_cntl.default_vars().defhighdttm;
 DECLARE v_defnulldttm   DEFAULT orgx_cntl.default_vars().defnulldttm;
+DECLARE v_db_pass       DEFAULT 'your_password_here';
 
 
 
-DECLARE v_mindate TIMESTAMP;
-DECLARE v_mindate_int INT64;
-DECLARE v_merge_datefilter INT64;
-DECLARE v_dim_source_record_set_key INT64 DEFAULT v_defnullnum;
-DECLARE v_max_sk INT64;
+DECLARE var_dim_source_record_set_key INT64 DEFAULT v_defnullnum;
+DECLARE v_max_sk INT64 DEFAULT NULL;
 
 BEGIN TRANSACTION;
 
@@ -35,7 +33,7 @@ BEGIN TRANSACTION;
 --#CALL sched.start_etl_transform(v_job_name , v_job_startdttm , v_job_enddttm , v_resource);
 ----------------------------------------------------------------------------------
 
-SET v_dim_source_record_set_key=(SELECT COALESCE(source_record_set_key , v_defnullnum) FROM orgx_edw.dim_source_record_set WHERE source_record_set_name = 'Withdrawal Feed Service Rule Result Data');
+SET var_dim_source_record_set_key=(SELECT COALESCE(source_record_set_key , v_defnullnum) FROM orgx_edw.dim_source_record_set WHERE source_record_set_name = 'Withdrawal Feed Service Rule Result Data');
 SET v_max_sk=(SELECT MAX(withdrawal_feed_service_rule_result_key) FROM orgx_edw.fact_withdrawal_feed_service_rule_result);
 
 
@@ -54,7 +52,7 @@ CREATE TEMP TABLE tmp_final_transform_fact_withdrawal_feed_service_rule_result
  param_3	                                        INT64	           NOT NULL,
  param_4	                                        STRING	           NOT NULL,
  source_record_set_key	                                INT64	           NOT NULL,
- source_key_value_number	                        INT64	           NOT NULL,
+ source_key_value_number	                        INT64	           NOT NULL
 );
 
 
@@ -81,8 +79,8 @@ rrd.Param3 AS param_3,
 rrd.Param4 AS param_4,
 CAST(rrd.sno AS INT64) AS source_key_value_number
 FROM edw_stage.stagehist__customerverification_base__withdrawalfeedservice_ruleresultdata_ptn rrd
-LEFT OUTER JOIN edw_stage.stagehist__customerverification_base__withdrawalfeedservice_result_ptn res ON rrd.WFFS_Result_sno = res.sno
-LEFT OUTER JOIN orgx_edw.dim_withdrawal_ref w ON  res.withdrawalid = w.withdrawal_id
+LEFT JOIN edw_stage.stagehist__customerverification_base__withdrawalfeedservice_result_ptn res ON rrd.WFFS_Result_sno = res.sno
+LEFT JOIN orgx_edw.dim_withdrawal_ref w ON  res.withdrawalid = w.withdrawal_id
 LEFT OUTER JOIN orgx_edw.dim_withdrawal_feed_service_rule sr ON rrd.RuleId = sr.source_key_value_number
 ;
 
@@ -115,7 +113,7 @@ COALESCE(s.param_1, v_defnullnum) AS param_1,
 COALESCE(s.param_2, v_defnullnum) AS param_2,
 COALESCE(s.param_3, v_defnullnum) AS param_3,
 COALESCE(s.param_4, v_defnullstr) AS param_4,
-v_dim_source_record_set_key AS source_record_set_key,
+var_dim_source_record_set_key AS source_record_set_key,
 s.source_key_value_number AS source_key_value_number
 FROM tmp_transform s
 
@@ -197,15 +195,14 @@ THEN UPDATE SET
 
 ---------------------------------------------------------------------------------
 -- update schedule table(s)
---#CALL sched.end_etl_transform(v_job_name , v_job_startdttm , v_job_enddttm , v_resource);
 ----------------------------------------------------------------------------------
 COMMIT TRANSACTION;
 
 EXCEPTION WHEN ERROR THEN
 --#  CALL sched.error_etl_transform(v_job_name , v_job_startdttm , v_job_enddttm, v_resource , @@error.message);
- ROLLBACK TRANSACTION;
+--  ROLLBACK TRANSACTION;
  RAISE;
 
 -- Drop temp tables
-DROP TABLE tmp_final_transform_fact_withdrawal_feed_service_rule_result;
+-- DROP TABLE tmp_final_transform_fact_withdrawal_feed_service_rule_result;
 END;

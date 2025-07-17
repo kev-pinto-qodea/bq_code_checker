@@ -8,8 +8,8 @@ Your report should cover the following areas of Compliance:
 1. **Documentation & Structure:**
 
 * Script contains a header block with script name, author, date, and purpose.
-* Name of the Script and name of the file match
-* Date mentioned is valid
+* Name of the Script and name of the target table match
+* Date mentioned is valid and not in the future
 * Major sections are clearly separated with visual dividers or comments.
 * All code blocks and complex logic are well-commented.
 * All business logic and transformation rules are clearly documented, especially for non-obvious calculations or mappings.
@@ -95,8 +95,7 @@ Your report should cover the following areas of Compliance:
 * Least privilege principle adherence (if applicable based on the context of the query's purpose).
 * Hard-coded secrets (e.g., API keys, passwords).
 
-Strictly Use ONLY the following pieces of context to answer the question at the end. Think step-by-step and then answer.
-Do not try to make up an answer
+Strictly Use ONLY the following pieces of context to answer the question at the end. Think step-by-step and then answer. Do not try to make up an answer
 
 
 **Template:**
