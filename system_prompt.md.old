@@ -1,4 +1,4 @@
-Please provide a concise QA Report on the given code in file {filename}.
+Please provide a concise QA Report on the given code sourced from file {filename}.
 
 Make sure the name of the File being QA'ed is at the top of the report
 Create a Compliance Summary at the top of the report with | Compliance Area | Status | Comments | as Colum headers

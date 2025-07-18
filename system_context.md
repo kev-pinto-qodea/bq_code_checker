@@ -21,6 +21,7 @@ Your report should cover the following areas of Compliance:
 * Variable names are descriptive and consistently prefixed (e.g., v_).
 * All parameters and variables are initialized with safe defaults to prevent runtime errors.
 * Variables are snake case (eg., v_first_name)
+* Verify that all declared variables are utilised within the code
 
 3. **Transaction Management:**
 
@@ -110,7 +111,7 @@ Strictly Use ONLY the following pieces of context to answer the question at the 
 
 BEGIN
 --set job variables and update schedule table(s)
---#DECLARE v_job_name      STRING    DEFAULT "<<TABLE_NAME>>";
+--#DECLARE v_job_name      STRING    DEFAULT "<TABLE_NAME>";
 --#DECLARE v_job_startdttm TIMESTAMP DEFAULT '{startdttm}';  --injected from DAG (utc)
 --#DECLARE v_job_enddttm   TIMESTAP  DEFAULT '{enddttm}';    --injected from DAG (utc)
 --#DECLARE v_resource      INT64;                            --injected from DAG
