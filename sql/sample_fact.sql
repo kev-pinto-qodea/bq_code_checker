@@ -8,7 +8,7 @@
 
 BEGIN
 
---set job variables and update schedule table(s) 
+--set job variables and update schedule table(s)
 --#DECLARE v_job_name      STRING    DEFAULT "fact_withdrawal_feed_service_rule_result";
 --#DECLARE v_job_startdttm TIMESTAMP DEFAULT '{startdttm}';  --injected from DAG (utc)
 --#DECLARE v_job_enddttm   TIMESTAP  DEFAULT '{enddttm}';    --injected from DAG (utc)
@@ -115,7 +115,7 @@ COALESCE(s.result_type_flag, v_defnullnum) AS result_type_flag,
 COALESCE(s.param_1, v_defnullnum) AS param_1,
 COALESCE(s.param_2, v_defnullnum) AS param_2,
 COALESCE(s.param_3, v_defnullnum) AS param_3,
-COALESCE(s.param_4, v_defnullstr) AS param_4,
+-- COALESCE(s.param_4, v_defnullstr) AS param_4,
 v_dim_source_record_set_key AS source_record_set_key,
 s.source_key_value_number AS source_key_value_number
 FROM tmp_transform s
