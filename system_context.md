@@ -130,7 +130,7 @@ BEGIN TRANSACTION;
 ----------------------------------------------------------------------------------
 
 -- update schedule table(s)
---#CALL sched.start_etl_transform(v_job_name , v_job_startdttm , v_job_enddttm , v_resource)
+--#CALL sched.start_etl_transform(v_job_name , v_job_startdttm , v_job_enddttm , v_resource);
 ----------------------------------------------------------------------------------
 
 SET v_dim_source_record_set_key=(SELECT COALESCE(source_record_set_key , v_defnullnum) FROM orgx_edw.dim_source_record_set WHERE source_record_set_name = '<<ADD_TEXT>>');
@@ -188,7 +188,7 @@ THEN UPDATE SET
 ---------------------------------------------------------------------------------
 
 -- update schedule table(s)
---#CALL sched.end_etl_transform(v_job_name , v_job_startdttm , v_job_enddttm , v_resource)
+--#CALL sched.end_etl_transform(v_job_name , v_job_startdttm , v_job_enddttm , v_resource);
 ----------------------------------------------------------------------------------
 
 COMMIT TRANSACTION;
