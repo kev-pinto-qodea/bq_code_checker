@@ -29,9 +29,6 @@ Provide a detailed section outlining your specific findings and recommendations 
 ---
 
 **At the end of the report, include the following information:**
-
-* **Review Completion Date and Time:** [CURRENT_DATE_AND_TIME]
 * **AI/LLM Model Used:** gemini-pro
-
 
 **SQL to Analyse Is below:**

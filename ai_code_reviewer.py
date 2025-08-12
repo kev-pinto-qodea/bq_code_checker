@@ -258,7 +258,7 @@ def generate():
                 # Append the time taken and current date/time to the report
                 with open(output_qa_filename, "a", encoding="utf-8") as md_file:
                     md_file.write(
-                        f"\n\n---\nTime taken for review: {time_taken:.2f} seconds\n"
+                        f"\n\n---\n Report Generated at {datetime.datetime.now()} \n\n---\nTime taken for review: {time_taken:.2f} seconds\n"
                     )
 
                 print(f"QA Report generated successfully in {output_qa_filename}")
