@@ -129,7 +129,6 @@ Run the script from your terminal using the following command structure:
 ```bash
 python ai_code_reviewer.py --sql_dir <path_to_sql_files> --project <gcp_project_id> --location <gcp_location>
 ```
-
 # Makefile for Pre-commit Hook Management
 
 This Makefile provides convenient commands to manage and run pre-commit hooks, specifically focusing on a `bq-code-review` hook within your project.

@@ -19,16 +19,28 @@ repos:
         args: ['--maxkb=2048'] # Warn if adding files larger than 2MB
       # - id: forbid-binary # Uncomment to prevent committing any binary files
 
-  - repo: local
+  # - repo: local
+  #   hooks:
+  #     - id: ai-sql-review
+  #       name: AI SQL Code Review
+  #       entry: python3 ai_code_reviewer.py
+  #       additional_dependencies:
+  #         - google-genai
+  #       language: python
+  #       pass_filenames: false
+  #       args: ['--project', 'cts-sbx-1f2-upbeat-hermann', '--location', 'europe-west4','--sql_dir','./sql']
+  #       types: [sql]
+  #       exclude_types:
+  #         - markdown
+
+  - repo: https://github.com/kev-pinto-qodea/ai-sql-reviewer-hook
+    rev: v0.1.0 # Use the latest stable version
     hooks:
-      - id: bq-code-review
-        name: AI SQL Code Review
-        entry: python3 ai_code_reviewer.py
-        additional_dependencies:
-          - google-genai
-        language: python
+      - id: ai-sql-review
         pass_filenames: false
-        args: ['--project', 'cts-sbx-1f2-upbeat-hermann', '--location', 'europe-west4','--sql_dir','./sql']
-        types: [sql]
-        exclude_types:
-          - markdown
+        args:
+          - "--project=cts-sbx-1f2-upbeat-hermann"
+          - "--location=europe-west4"
+          - "--sql_dir=./sql" # Directory containing SQL files
+      # pre-commit inherently handles the files it matches.
+      # Your script receives the files as positional arguments.
